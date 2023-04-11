@@ -29,18 +29,37 @@ const App = () => {
     fetchData();
   }, []);
 
+  if (isLoading) {
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
+  }
+
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div className="title">
+          <h2>No Tours Left</h2>
+          <div className="title-underline"></div>
+          <button
+            type="button"
+            className="btn"
+            style={{ marginTop: '2rem' }}
+            onClick={() => fetchData()}
+          >
+            Reload Tours
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <div>
-      {isLoading ? (
-        <main>
-          <Loading />
-        </main>
-      ) : (
-        <main>
-          <Tours tourData={tours} removeTour={removeTour} />
-        </main>
-      )}
-    </div>
+    <main>
+      <Tours tourData={tours} removeTour={removeTour} />
+    </main>
   );
 };
 export default App;
